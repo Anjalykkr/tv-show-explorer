@@ -21,7 +21,7 @@ export class ReviewForm {
 
   reviewForm = this.fb.group({
     rating: [null, [Validators.required, Validators.min(1), Validators.max(5)]],
-    comment: ['', [Validators.required, Validators.minLength(5)]]
+    comment: ['', [Validators.required, Validators.minLength(4)]]
   });
 
   ngOnInit(): void {

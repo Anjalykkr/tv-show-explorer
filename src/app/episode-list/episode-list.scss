@@ -1,0 +1,33 @@
+.season-block {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.season-toggle {
+  background: none;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  padding: 10px 0;
+}
+
+.episode-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 10px;
+}
+
+.episode-card {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.trailer {
+  margin-top: 10px;
+}

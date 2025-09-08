@@ -1,1 +1,28 @@
-<p>episode-list works!</p>
+@if (seasonKeys().length > 0) {
+  @for (season of seasonKeys(); track season) {
+    <div class="season-block">
+      <button class="season-toggle" (click)="toggleSeason(season)">
+        Season {{ season }}
+        <span>{{ expandedSeason() === season ? '^' : 'v' }}</span>
+      </button>
+
+      @if (expandedSeason() === season) {
+        <ul class="episode-list">
+          @for (ep of groupedEpisodes()[season]; track ep.id) {
+            <li class="episode-card">
+              <h4>Episode {{ ep.number }}: {{ ep.name }}</h4>
+              <p><strong>Airdate:</strong> {{ ep.airdate }}</p>
+              <p [innerHTML]="ep.summary"></p>
+              <div class="trailer">
+                <iframe width="100%" height="200" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0"
+                  allowfullscreen></iframe>
+              </div>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  }
+} @else {
+  <p>No episodes available.</p>
+}

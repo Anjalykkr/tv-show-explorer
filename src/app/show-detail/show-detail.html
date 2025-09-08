@@ -28,13 +28,7 @@
 
   <section class="episodes-section">
     <h3>Episodes</h3>
-    <ul class="episode-list">
-      @for (ep of episodes(); track ep.id) {
-        <li>
-          <strong>Season {{ ep.season }}, Episode {{ ep.number }}:</strong> {{ ep.name }}
-        </li>
-      }
-    </ul>
+    <app-episode-list [episodes]="episodes()"></app-episode-list>
   </section>
 
   <section class="reviews-section">

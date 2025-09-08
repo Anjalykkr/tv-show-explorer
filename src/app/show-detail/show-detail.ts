@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ReviewForm } from '../review-form/review-form';
+import { EpisodeList } from '../episode-list/episode-list';
 
 @Component({
   selector: 'app-show-detail',
-  imports: [CommonModule, ReviewForm],
+  imports: [CommonModule, ReviewForm, EpisodeList],
   templateUrl: './show-detail.html',
   styleUrls: ['./show-detail.scss']
 })
