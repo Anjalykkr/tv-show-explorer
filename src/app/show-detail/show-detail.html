@@ -1,0 +1,44 @@
+@if (show()) {
+  <div class="show-container">
+    <img [src]="show().image?.medium" alt="{{ show().name }}" />
+    <div class="info">
+      <h2>{{ show().name }}</h2>
+      <p [innerHTML]="show().summary"></p>
+      <ul>
+        <li><strong>Genres:</strong> {{ show().genres.join(', ') }}</li>
+        <li><strong>Premiered:</strong> {{ show().premiered }}</li>
+        <li><strong>Language:</strong> {{ show().language }}</li>
+        <li><strong>Network:</strong> {{ show().network?.name }}</li>
+        <li><strong>Rating:</strong> {{ show().rating?.average || 'N/A' }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <section class="cast-section">
+    <h3>Cast</h3>
+    <div class="cast-grid">
+      @for (member of cast(); track member.person.id) {
+        <div class="cast-card">
+          <img [src]="member.person.image?.medium" alt="{{ member.person.name }}" />
+          <p><strong>{{ member.person.name }}</strong><br />as {{ member.character.name }}</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="episodes-section">
+    <h3>Episodes</h3>
+    <ul class="episode-list">
+      @for (ep of episodes(); track ep.id) {
+        <li>
+          <strong>Season {{ ep.season }}, Episode {{ ep.number }}:</strong> {{ ep.name }}
+        </li>
+      }
+    </ul>
+  </section>
+
+  <section class="reviews-section">
+    <h3>Reviews</h3>
+    <app-review-form [showId]="show().id"></app-review-form>
+  </section>
+}

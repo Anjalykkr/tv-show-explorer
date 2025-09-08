@@ -1,0 +1,18 @@
+<div class="search-container">
+  <input [(ngModel)]="query" (input)="search()" placeholder="Search TV Shows" />
+</div>
+
+<div class="grid">
+  @for (show of shows(); track show.id) {
+    <div class="card">
+      <img [src]="show.image?.medium" alt="{{ show.name }}" />
+      <h3>{{ show.name }}</h3>
+      <p [innerHTML]="show.summary"></p>
+      <a [routerLink]="['/show', show.id]">Details</a>
+    </div>
+  }
+
+  @if (shows().length === 0) {
+    <p class="no-results">No results found.</p>
+  }
+

@@ -1,0 +1,39 @@
+.show-container {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.show-container img {
+  max-width: 200px;
+  border-radius: 8px;
+}
+
+.info {
+  flex: 1;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.cast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.cast-card {
+  text-align: center;
+}
+
+.cast-card img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.episode-list {
+  padding-left: 20px;
+}
