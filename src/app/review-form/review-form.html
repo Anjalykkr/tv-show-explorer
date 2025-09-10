@@ -1,5 +1,5 @@
 <form [formGroup]="reviewForm" (ngSubmit)="submitReview()" class="review-form">
-  <label for="rating">Rating (1–5):</label>
+  <label for="rating">Rating (1-5):</label>
   <input type="number" id="rating" formControlName="rating" min="1" max="5" />
 
   <label for="comment">Comment:</label>

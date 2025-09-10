@@ -1,4 +1,4 @@
-import { Component, signal, Input } from '@angular/core';
+import { Component, signal, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 
@@ -13,7 +13,7 @@ interface Review {
   templateUrl: './review-form.html',
   styleUrls: ['./review-form.scss']
 })
-export class ReviewForm {
+export class ReviewForm implements OnInit {
   @Input() showId!: number;
   private fb = new FormBuilder();
 
@@ -50,7 +50,9 @@ export class ReviewForm {
     // Runtime guard + type assertion
     if (typeof raw.rating === 'number' && typeof raw.comment === 'string') {
       const review = { rating: raw.rating, comment: raw.comment } as const;
-      this.reviews.update(current => [...current, review]);
+      //this.reviews.update(current => [...current, review]);
+      //this.reviews.set(this.reviews().concat(review));
+      this.reviews.set([...this.reviews(), review]);
       this.persistReviews();
       this.reviewForm.reset();
     }

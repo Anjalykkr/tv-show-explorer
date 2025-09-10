@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./show-list.scss']
 })
 export class ShowList {
- query = '';
+  query = '';
   shows = signal<any[]>([]);
 
   constructor(private http: HttpClient) {}
