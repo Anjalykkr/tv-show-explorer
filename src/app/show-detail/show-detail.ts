@@ -22,24 +22,42 @@ export class ShowDetail implements OnInit{
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.fetchShow(+id);
+      this.fetchShow(+id); //asynchronous
       this.fetchCast(+id);
       this.fetchEpisodes(+id);
     }
   }
 
   fetchShow(id: number) {
-    this.http.get(`https://api.tvmaze.com/shows/${id}`)
-      .subscribe(data => this.show.set(data));
+    this.http.get(`https://api.tvmaze.com/shows/${id}`) //move to service, env variable
+      .subscribe({
+        next: data => this.show.set(data),
+        error: err => {
+          console.error('Error fetching show details:', err);
+          this.show.set(null);
+        }
+      });
   }
 
   fetchCast(id: number) {
     this.http.get<any[]>(`https://api.tvmaze.com/shows/${id}/cast`)
-      .subscribe(data => this.cast.set(data));
+      .subscribe({
+        next: data => this.cast.set(data),
+        error: err => {
+          console.error('Error fetching cast:', err);
+          this.cast.set([]);
+        }
+      });
   }
 
   fetchEpisodes(id: number) {
     this.http.get<any[]>(`https://api.tvmaze.com/shows/${id}/episodes`)
-      .subscribe(data => this.episodes.set(data));
+      .subscribe({
+        next: data => this.episodes.set(data),
+        error: err => {
+          console.error('Error fetching episodes:', err);
+          this.episodes.set([]);
+        }
+      });
   }
 }
