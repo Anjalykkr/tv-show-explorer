@@ -1,3 +1,3 @@
 export const environment = {
-  tvMazeBaseUrl: 'https://api.tvmaze.com/shows'
+  tvMazeBaseUrl: 'https://api.tvmaze.com'
 };

@@ -10,19 +10,18 @@ export class TvShowService {
   constructor(private http: HttpClient) {}
 
   fetchShow(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${id}`);
+    return this.http.get(`${this.baseUrl}/shows/${id}`);
   }
 
   searchShows(query: string): Observable<any[]> {
-    const baseUrl = this.baseUrl.replace(/\/shows$/, '');
-    return this.http.get<any[]>(`${baseUrl}/search/shows?q=${query}`);
+    return this.http.get<any[]>(`${this.baseUrl}/search/shows?q=${query}`);
   }
 
   fetchCast(id: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/${id}/cast`);
+    return this.http.get<any[]>(`${this.baseUrl}/shows/${id}/cast`);
   }
 
   fetchEpisodes(id: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/${id}/episodes`);
+    return this.http.get<any[]>(`${this.baseUrl}/shows/${id}/episodes`);
   }
 }

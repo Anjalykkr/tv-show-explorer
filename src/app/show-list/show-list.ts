@@ -1,10 +1,8 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-// ...existing code...
 import { TvShowService } from '../tv-show.service';
 import { inject } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -21,7 +19,6 @@ export class ShowList {
 
   search() {
     if (!this.query.trim()) return;
-  const baseUrl = environment.tvMazeBaseUrl.replace(/\/shows$/, '');
     this.tvShowService.searchShows(this.query)
       .subscribe({
         next: (results: any[]) => this.shows.set(results.map((r: any) => r.show)),
