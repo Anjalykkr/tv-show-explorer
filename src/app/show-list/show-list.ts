@@ -19,6 +19,12 @@ export class ShowList {
   search() {
     if (!this.query.trim()) return;
     this.http.get<any[]>(`https://api.tvmaze.com/search/shows?q=${this.query}`)
-      .subscribe(results => this.shows.set(results.map(r => r.show)));
+      .subscribe({
+        next: results => this.shows.set(results.map(r => r.show)),
+        error: err => {
+          console.error('Error fetching shows:', err);
+          this.shows.set([]);
+        }
+      });
   }
 }

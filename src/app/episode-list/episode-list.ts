@@ -1,14 +1,6 @@
 import { Component, Input, signal, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-interface Episode {
-  id: number;
-  name: string;
-  season: number;
-  number: number;
-  airdate: string;
-  summary: string;
-}
+import { Episode } from './episode-list.model';
 
 @Component({
   selector: 'app-episode-list',

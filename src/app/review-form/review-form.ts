@@ -1,11 +1,7 @@
 import { Component, signal, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-
-interface Review { //export
-  rating: number;
-  comment: string;
-}
+import { Review } from './review-form.model';
 
 @Component({
   selector: 'app-review-form',
