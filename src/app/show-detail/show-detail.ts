@@ -1,7 +1,7 @@
 import { Component, signal, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { TvShowService } from '../tv-show.service';
 import { ReviewForm } from '../review-form/review-form';
 import { EpisodeList } from '../episode-list/episode-list';
 
@@ -13,7 +13,7 @@ import { EpisodeList } from '../episode-list/episode-list';
 })
 export class ShowDetail implements OnInit{
   private route = inject(ActivatedRoute);
-  private http = inject(HttpClient);
+  private tvShowService: TvShowService = inject(TvShowService);
 
   show = signal<any>(null);
   cast = signal<any[]>([]);
@@ -29,10 +29,10 @@ export class ShowDetail implements OnInit{
   }
 
   fetchShow(id: number) {
-    this.http.get(`https://api.tvmaze.com/shows/${id}`) //move to service, env variable
+    this.tvShowService.fetchShow(id)
       .subscribe({
-        next: data => this.show.set(data),
-        error: err => {
+        next: (data: any) => this.show.set(data),
+        error: (err: any) => {
           console.error('Error fetching show details:', err);
           this.show.set(null);
         }
@@ -40,10 +40,10 @@ export class ShowDetail implements OnInit{
   }
 
   fetchCast(id: number) {
-    this.http.get<any[]>(`https://api.tvmaze.com/shows/${id}/cast`)
+    this.tvShowService.fetchCast(id)
       .subscribe({
-        next: data => this.cast.set(data),
-        error: err => {
+        next: (data: any[]) => this.cast.set(data),
+        error: (err: any) => {
           console.error('Error fetching cast:', err);
           this.cast.set([]);
         }
@@ -51,10 +51,10 @@ export class ShowDetail implements OnInit{
   }
 
   fetchEpisodes(id: number) {
-    this.http.get<any[]>(`https://api.tvmaze.com/shows/${id}/episodes`)
+    this.tvShowService.fetchEpisodes(id)
       .subscribe({
-        next: data => this.episodes.set(data),
-        error: err => {
+        next: (data: any[]) => this.episodes.set(data),
+        error: (err: any) => {
           console.error('Error fetching episodes:', err);
           this.episodes.set([]);
         }

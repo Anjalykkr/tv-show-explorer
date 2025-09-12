@@ -1,7 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+// ...existing code...
+import { TvShowService } from '../tv-show.service';
+import { inject } from '@angular/core';
+import { environment } from '../../environments/environment';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -14,14 +17,15 @@ export class ShowList {
   query = '';
   shows = signal<any[]>([]);
 
-  constructor(private http: HttpClient) {}
+  private tvShowService: TvShowService = inject(TvShowService);
 
   search() {
     if (!this.query.trim()) return;
-    this.http.get<any[]>(`https://api.tvmaze.com/search/shows?q=${this.query}`)
+  const baseUrl = environment.tvMazeBaseUrl.replace(/\/shows$/, '');
+    this.tvShowService.searchShows(this.query)
       .subscribe({
-        next: results => this.shows.set(results.map(r => r.show)),
-        error: err => {
+        next: (results: any[]) => this.shows.set(results.map((r: any) => r.show)),
+        error: (err: any) => {
           console.error('Error fetching shows:', err);
           this.shows.set([]);
         }
