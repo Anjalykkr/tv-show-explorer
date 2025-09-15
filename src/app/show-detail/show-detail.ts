@@ -1,4 +1,5 @@
 import { Component, signal, inject, OnInit } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { TvShowService } from '../tv-show.service';
@@ -19,45 +20,44 @@ export class ShowDetail implements OnInit{
   cast = signal<any[]>([]);
   episodes = signal<any[]>([]);
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.fetchShow(+id); //asynchronous
-      this.fetchCast(+id);
-      this.fetchEpisodes(+id);
+      await Promise.all([
+        this.fetchShow(+id),
+        this.fetchCast(+id),
+        this.fetchEpisodes(+id)
+      ]);
     }
   }
 
-  fetchShow(id: number) {
-    this.tvShowService.fetchShow(id)
-      .subscribe({
-        next: (data: any) => this.show.set(data),
-        error: (err: any) => {
-          console.error('Error fetching show details:', err);
-          this.show.set(null);
-        }
-      });
+  async fetchShow(id: number): Promise<void> {
+    try {
+      const data = await firstValueFrom(this.tvShowService.fetchShow(id));
+      this.show.set(data);
+    } catch (err) {
+      console.error('Error fetching show details:', err);
+      this.show.set(null);
+    }
   }
 
-  fetchCast(id: number) {
-    this.tvShowService.fetchCast(id)
-      .subscribe({
-        next: (data: any[]) => this.cast.set(data),
-        error: (err: any) => {
-          console.error('Error fetching cast:', err);
-          this.cast.set([]);
-        }
-      });
+  async fetchCast(id: number): Promise<void> {
+    try {
+      const data = await firstValueFrom(this.tvShowService.fetchCast(id));
+      this.cast.set(data ?? []);
+    } catch (err) {
+      console.error('Error fetching cast:', err);
+      this.cast.set([]);
+    }
   }
 
-  fetchEpisodes(id: number) {
-    this.tvShowService.fetchEpisodes(id)
-      .subscribe({
-        next: (data: any[]) => this.episodes.set(data),
-        error: (err: any) => {
-          console.error('Error fetching episodes:', err);
-          this.episodes.set([]);
-        }
-      });
+  async fetchEpisodes(id: number): Promise<void> {
+    try {
+      const data = await firstValueFrom(this.tvShowService.fetchEpisodes(id));
+      this.episodes.set(data ?? []);
+    } catch (err) {
+      console.error('Error fetching episodes:', err);
+      this.episodes.set([]);
+    }
   }
 }
